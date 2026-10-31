@@ -2,7 +2,7 @@
 
 [Русский](../ru/faq.md)
 
-## Is this an official SDK or a complete Python SDK port?
+## Is this an official SDK?
 No. This is an independent .NET client with the endpoint subset listed in the README.
 Use the [official API reference](https://yandex.ru/support/tracker/ru/api/about-api) for service behavior.
 
@@ -13,7 +13,7 @@ No live credentials are provided by CI.
 
 ## Why does 0.1.0 fail to restore?
 It must first be published to NuGet. Until then pack this repository and use a temporary local feed
-as described in [Releasing and Alva](releasing.md). Do not commit local paths or package binaries.
+as described in [Releasing](releasing.md). Do not commit local paths or package binaries.
 
 ## How do I inspect custom fields?
 Issue.Fields holds JSON extension properties. Read the JsonElement using the actual field schema.
@@ -22,4 +22,4 @@ Issue.Fields holds JSON extension properties. Read the JsonElement using the act
 It has not been validated. Serialization uses reflection; do not assume AOT/trimming compatibility.
 
 ## Where do I request changes?
-SDK API behavior belongs in YandexTracker. Alva's mapping, UI and scheduling belong in Alva.
+Report SDK issues and feature requests in the YandexTracker repository.

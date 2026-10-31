@@ -20,7 +20,6 @@ copy .env.example to .env and fill in your own access details. Never commit that
 
 Update both language guides when behavior changes. Generated docs/api/*.yml and docs/_site are ignored;
 edit C# XML comments or Markdown instead. Version tags vX.Y.Z drive MinVer; untagged builds are previews.
-Keep SDK changes here and Alva import/mapping changes in Alva; Aiko links record that boundary.
 
 Submit a focused pull request with validation results. See [release setup](docs/articles/en/releasing.md)
 for the one-time repository configuration. Publishing is a separate maintainer action.

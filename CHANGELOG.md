@@ -5,7 +5,7 @@
 ## Unreleased
 
 ### Added
-- Standalone SDK extracted from Alva, targeting .NET 8, 9 and 10.
+- Standalone SDK targeting .NET 8, 9 and 10.
 - Issues, searches, links, comments, transitions, queues, users and statuses.
 - OAuth/IAM, organization headers, cancellation, pagination and safe retries.
 - Typed API errors, working-time durations and extensible issue fields.

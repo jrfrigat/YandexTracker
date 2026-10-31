@@ -54,7 +54,7 @@
         "repo": "https://github.com/jrfrigat/YandexTracker",
         "branch": "main"
       },
-      "_appFooter": "Unofficial Yandex Tracker SDK for .NET · Неофициальный SDK Яндекс Трекера"
+      "_appFooter": "Unofficial Yandex Tracker SDK for .NET | Неофициальный SDK Яндекс Трекера"
     }
   }
 }

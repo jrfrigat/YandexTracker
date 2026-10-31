@@ -3,7 +3,7 @@
 [Русский](../ru/issues.md)
 
 Choose exactly one IssueSearch condition: Query, Filter, Keys or Queue. Order is supported with Filter only.
-PageSize is 1–100; Limit bounds the total number of returned issues. Enumeration requests pages lazily.
+PageSize is 1-100; Limit bounds the total number of returned issues. Enumeration requests pages lazily.
 This is ordinary page-based iteration, not a snapshot or an export/scroll API; changes during a scan
 can change the result set.
 
@@ -48,4 +48,4 @@ Get available transitions rather than writing a status field directly. Issue.Fie
 JSON properties; inspect JsonElement values according to the queue's field schema.
 
 Dates without time use DateOnly; timestamp fields use DateTimeOffset. Duration conversion assumes an
-8-hour day and a 5-day week; it is a conversion helper, not a work calendar or an Alva scheduling rule.
+8-hour day and a 5-day week; it is a conversion helper, not a work calendar or a scheduling engine.

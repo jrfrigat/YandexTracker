@@ -6,4 +6,4 @@ An unofficial async SDK for .NET 8, 9 and 10.
 - [Руководства на русском](articles/ru/getting-started.md)
 - [API reference](api/index.md)
 
-The SDK handles Tracker HTTP requests and models. Alva owns task importing, mapping and planning.
+The SDK handles Tracker HTTP requests and models.

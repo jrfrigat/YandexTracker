@@ -1,4 +1,4 @@
-# Releasing and Alva
+# Releasing
 
 [Русский](../ru/releasing.md)
 
@@ -11,7 +11,7 @@
    package, owner jrfrigat, repository YandexTracker, workflow release.yml and environment nuget.
    Follow the current [NuGet Trusted Publishing guide](https://learn.microsoft.com/nuget/nuget-org/trusted-publishing).
    There is no long-lived NuGet API key in the repository.
-4. Set Pages → Build and deployment → Source to GitHub Actions; allow the github-pages environment
+4. Set Pages -> Build and deployment -> Source to GitHub Actions; allow the github-pages environment
    to deploy main. Enable private vulnerability reporting if desired.
 5. Enable required CI checks/branch protection. CodeQL availability depends on repository/account settings.
 
@@ -32,14 +32,18 @@ PowerShell, from this repository:
 ~~~powershell
 $feed = Join-Path $env:TEMP 'yandextracker-local-feed'
 dotnet pack src/YandexTracker/YandexTracker.csproj -c Release -p:MinVerVersionOverride=0.1.0 -o $feed
-dotnet restore ../Alva/Alva.slnx --source $feed --source https://api.nuget.org/v3/index.json
-dotnet test ../Alva/Alva.slnx -c Release --no-restore
 ~~~
 
 Use a fresh temporary packages directory with --packages during restore when validating a changed
 local package with the same version, then pass the same directory as RestorePackagesPath to builds/tests.
 Otherwise NuGet may reuse a cached 0.1.0. Never replace an already published stable version.
 
-Alva.Integrations.YandexTracker pins PackageReference YandexTracker 0.1.0. Alva no longer compiles or
-ships the SDK source or SDK tests. A clean machine/CI needs the published package; until then it needs
-the local feed. No machine-specific feed is committed.
+To use the package in another project, add a PackageReference to YandexTracker version 0.1.0.
+Restore that project with the local feed; replace the example path with your project file:
+
+~~~powershell
+dotnet restore ../Consumer/Consumer.csproj --source $feed --source https://api.nuget.org/v3/index.json
+~~~
+
+A clean machine or CI needs the published package or access to the local feed.
+Do not commit machine-specific feed paths or package binaries.

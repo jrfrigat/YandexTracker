@@ -4,7 +4,7 @@
 
 <h1 align="center">YandexTracker for .NET</h1>
 
-<p align="center">🌐 <b>English</b> · <a href="README.ru.md">Русский</a></p>
+<p align="center">🌐 <b>English</b> | <a href="README.ru.md">Русский</a></p>
 
 [![CI](https://github.com/jrfrigat/YandexTracker/actions/workflows/ci.yml/badge.svg)](https://github.com/jrfrigat/YandexTracker/actions/workflows/ci.yml)
 [![NuGet](https://img.shields.io/nuget/v/YandexTracker.svg?logo=nuget)](https://www.nuget.org/packages/YandexTracker)
@@ -12,23 +12,22 @@
 [![.NET](https://img.shields.io/badge/.NET-8%20%7C%209%20%7C%2010-512BD4)](https://dotnet.microsoft.com)
 
 Unofficial asynchronous library for the [Yandex Tracker API](https://yandex.ru/support/tracker/ru/api/about-api).
-Runs on **.NET 8, .NET 9 and .NET 10**. The API design is inspired by a subset of the official Python SDK
-[yandex_tracker_client](https://github.com/yandex/yandex_tracker_client).
+Runs on **.NET 8, .NET 9 and .NET 10**.
 
-> ⚠️ Unofficial project, not affiliated with Yandex. Comply with the service's terms of use.
+> Unofficial project, not affiliated with Yandex. Comply with the service's terms of use.
 
 ## Features
 
-- ✅ Fully asynchronous API with `CancellationToken` on every call; paged results as `IAsyncEnumerable`
-- ✅ **Issues** — get, search by query / filter / keys / queue, create (idempotent with `Unique`), update with a
+- Fully asynchronous API with `CancellationToken` on every call; paged results as `IAsyncEnumerable`
+- **Issues** - get, search by query / filter / keys / queue, create (idempotent with `Unique`), update with a
   version check, links, transitions, comments; queue-local fields kept in `Issue.Fields`
-- ✅ **Queues, users, statuses** and `myself`
-- ✅ **OAuth or IAM** tokens; **Yandex 360** (`X-Org-ID`) or **Yandex Cloud** (`X-Cloud-Org-ID`) organizations
-- ✅ **Retries** — a 429 is repeated for any request, a 5xx or a network error only for reads and searches;
+- **Queues, users, statuses** and `myself`
+- **OAuth or IAM** tokens; **Yandex 360** (`X-Org-ID`) or **Yandex Cloud** (`X-Cloud-Org-ID`) organizations
+- **Retries** - a 429 is repeated for any request, a 5xx or a network error only for reads and searches;
   `Retry-After` is honoured
-- ✅ **Typed exceptions** under `YandexTrackerException`, with Tracker's own messages and the raw body
-- ✅ **Working-time durations** — `YandexTrackerDuration` turns `P1W2DT3H` into hours and back
-- ✅ No dependencies beyond the BCL; full XML documentation; Source Link
+- **Typed exceptions** under `YandexTrackerException`, with Tracker's own messages and the raw body
+- **Working-time durations** - `YandexTrackerDuration` turns `P1W2DT3H` into hours and back
+- No dependencies beyond the BCL; full XML documentation; Source Link
 
 ## Installation
 
@@ -61,7 +60,7 @@ var me = await client.MyselfAsync();
 
 // One issue and its estimate in working hours
 var issue = await client.Issues.GetAsync("TEST-1");
-var hours = YandexTrackerDuration.ToHours(issue.OriginalEstimation);   // P1W2D → 56
+var hours = YandexTrackerDuration.ToHours(issue.OriginalEstimation);   // P1W2D -> 56
 
 // Search: pages are fetched as you enumerate
 await foreach (var found in client.Issues.FindAsync(new IssueSearch { Query = "Queue: TEST Resolution: empty()" }))
@@ -88,7 +87,7 @@ await foreach (var queue in client.Queues.GetAllAsync()) Console.WriteLine(queue
 | Yandex Cloud | IAM | `OrganizationKind = Cloud`, `TokenType = Iam` |
 | Yandex Cloud | OAuth | `OrganizationKind = Cloud`, `TokenType = OAuth` |
 
-The organization id is shown in Tracker under *Administration → Organizations*. Details:
+The organization id is shown in Tracker under *Administration -> Organizations*. Details:
 [Authentication](docs/articles/en/authentication.md).
 
 ## Errors and retries
@@ -127,13 +126,13 @@ Guides and API reference: **<https://jrfrigat.github.io/YandexTracker/>**
 
 ```
 .
-├── src/
-│   └── YandexTracker/          # the library: client, endpoints, models, exceptions, HTTP, JSON
-├── tests/
-│   └── YandexTracker.Tests/    # unit tests + (token-gated, read-only) integration tests (xUnit)
-├── docs/                       # documentation site (DocFX)
-├── assets/                     # icon
-└── .github/workflows/          # CI, release (NuGet), CodeQL, docs publishing
++-- src/
+|   \-- YandexTracker/          # the library: client, endpoints, models, exceptions, HTTP, JSON
++-- tests/
+|   \-- YandexTracker.Tests/    # unit tests + (token-gated, read-only) integration tests (xUnit)
++-- docs/                       # documentation site (DocFX)
++-- assets/                     # icon
+\-- .github/workflows/          # CI, release (NuGet), CodeQL, docs publishing
 ```
 
 ## Build and test
@@ -150,6 +149,6 @@ and are **skipped automatically** unless `YANDEX_TRACKER_TOKEN` and `YANDEX_TRAC
 
 ## License
 
-[MIT](LICENSE) © FrigaT
+[MIT](LICENSE) (c) FrigaT
 
-See [Releasing and Alva](docs/articles/en/releasing.md) and [Contributing](CONTRIBUTING.md).
+See [Releasing](docs/articles/en/releasing.md) and [Contributing](CONTRIBUTING.md).
