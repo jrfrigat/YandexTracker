@@ -31,7 +31,7 @@ PowerShell, from this repository:
 
 ~~~powershell
 $feed = Join-Path $env:TEMP 'yandextracker-local-feed'
-dotnet pack src/YandexTracker/YandexTracker.csproj -c Release -p:Version=0.1.0 -o $feed
+dotnet pack src/YandexTracker/YandexTracker.csproj -c Release -p:MinVerVersionOverride=0.1.0 -o $feed
 dotnet restore ../Alva/Alva.slnx --source $feed --source https://api.nuget.org/v3/index.json
 dotnet test ../Alva/Alva.slnx -c Release --no-restore
 ~~~

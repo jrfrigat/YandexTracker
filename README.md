@@ -96,7 +96,7 @@ The organization id is shown in Tracker under *Administration → Organizations*
 ```csharp
 try
 {
-    await client.Issues.UpdateAsync("TEST-1", fields, version: 7);
+    await client.Issues.UpdateAsync("TEST-1", new Dictionary<string, object?> { ["summary"] = "Updated title" }, version: 7);
 }
 catch (YandexTrackerConflictException)
 {
