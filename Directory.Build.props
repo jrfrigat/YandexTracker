@@ -1,0 +1,51 @@
+<Project>
+
+  <!-- Shared settings for every project in the repository. -->
+  <PropertyGroup>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Deterministic>true</Deterministic>
+    <InvariantGlobalization>true</InvariantGlobalization>
+
+    <!-- Analyzers / code style -->
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <AnalysisLevel>latest-recommended</AnalysisLevel>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <!-- NU1900 means the NuGet audit service could not be reached (offline/proxy build): it reports a
+         fetch failure, never an actual vulnerability, so it must never fail the build. -->
+    <WarningsNotAsErrors>$(WarningsNotAsErrors);NU1900</WarningsNotAsErrors>
+
+    <!-- Repository / authorship metadata (shared by all packable projects). -->
+    <Authors>FrigaT</Authors>
+    <Company>FrigaT</Company>
+    <Product>YandexTracker</Product>
+    <Copyright>Copyright © FrigaT</Copyright>
+    <PackageProjectUrl>https://github.com/jrfrigat/YandexTracker</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/jrfrigat/YandexTracker.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageTags>yandex;tracker;yandex-tracker;api;async;client;dotnet</PackageTags>
+
+    <!-- Version is derived from git tags by MinVer: the latest 'vX.Y.Z' tag IS the package version;
+         untagged builds get a 'preview' pre-release. CI needs full history/tags (fetch-depth: 0). -->
+    <MinVerTagPrefix>v</MinVerTagPrefix>
+    <MinVerMinimumMajorMinor>0.1</MinVerMinimumMajorMinor>
+    <MinVerDefaultPreReleaseIdentifiers>preview</MinVerDefaultPreReleaseIdentifiers>
+
+    <!-- Reproducible builds + Source Link. -->
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'true'">true</ContinuousIntegrationBuild>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MinVer" PrivateAssets="All" />
+  </ItemGroup>
+
+</Project>

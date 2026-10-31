@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net8.0;net9.0;net10.0</TargetFrameworks>
+    <PackageId>YandexTracker</PackageId>
+    <Title>YandexTracker</Title>
+    <Description>Unofficial asynchronous .NET client for the Yandex Tracker API (.NET 8/9/10): issues, search, links, transitions, comments, queues, users and statuses. — Неофициальный асинхронный клиент API Яндекс Трекера.</Description>
+    <IsPackable>true</IsPackable>
+    <!-- Here, not in Directory.Build.targets: the SDK derives DocumentationFile before that file is
+         imported, so a flag set there produces no XML file and no CS1591 check. -->
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="YandexTracker.Tests" />
+  </ItemGroup>
+
+</Project>

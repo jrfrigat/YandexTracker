@@ -1,0 +1,31 @@
+<Project>
+
+  <!-- Source Link is only meaningful for packable (library) projects.
+       This file is imported after the project body, so IsPackable is final here. -->
+  <ItemGroup Condition="'$(IsPackable)' == 'true'">
+    <PackageReference Include="Microsoft.SourceLink.GitHub" PrivateAssets="All" />
+  </ItemGroup>
+
+  <!-- Shared NuGet package icon (NuGet requires a raster image, not SVG). -->
+  <PropertyGroup Condition="'$(IsPackable)' == 'true'">
+    <PackageIcon>icon.png</PackageIcon>
+  </PropertyGroup>
+  <ItemGroup Condition="'$(IsPackable)' == 'true'">
+    <None Include="$(MSBuildThisFileDirectory)assets\icon.png" Pack="true" PackagePath="\" Visible="false" />
+  </ItemGroup>
+
+  <!-- Full XML documentation is mandatory on the public API so DocFX can render a complete
+       reference: library projects FAIL the build on any undocumented public/protected member
+       (CS1591), and every analyzer warning fails the build too. GenerateDocumentationFile itself
+       is set in the library's .csproj - the SDK reads it before this file is imported. -->
+  <PropertyGroup Condition="'$(IsPackable)' == 'true' and '$(IsTestProject)' != 'true'">
+    <WarningsAsErrors>$(WarningsAsErrors);CS1591</WarningsAsErrors>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+  <!-- Test code is held to the same zero-warning bar (CS1591/CA1707 are relaxed for tests/** in .editorconfig). -->
+  <PropertyGroup Condition="'$(IsTestProject)' == 'true'">
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+</Project>

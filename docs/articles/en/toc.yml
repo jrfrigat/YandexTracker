@@ -1,0 +1,14 @@
+- name: Getting started
+  href: getting-started.md
+- name: Authentication
+  href: authentication.md
+- name: Issues and search
+  href: issues.md
+- name: Errors and retries
+  href: errors.md
+- name: Architecture
+  href: architecture.md
+- name: FAQ
+  href: faq.md
+- name: Releasing and Alva
+  href: releasing.md
