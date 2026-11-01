@@ -4,10 +4,14 @@ using YandexTracker.Models.Users;
 namespace YandexTracker;
 
 /// <summary>
-/// A client of the Yandex Tracker API (v2). Its endpoint groups - <see cref="Issues"/>, <see cref="Queues"/>,
-/// <see cref="Users"/> and <see cref="Statuses"/> - mirror the attributes of <c>TrackerClient</c> in the official
-/// Python SDK.
+/// A client of the Yandex Tracker API (v2), with endpoint groups for <see cref="Issues"/>,
+/// <see cref="Queues"/>, <see cref="Users"/> and <see cref="Statuses"/>.
 /// </summary>
+/// <remarks>
+/// API failures use <see cref="YandexTrackerApiException"/>; invalid responses use
+/// <see cref="YandexTrackerSerializationException"/>. Standard argument, transport and cancellation
+/// exceptions can also propagate. Pass a cancellation token to bound each operation.
+/// </remarks>
 public interface IYandexTrackerClient : IDisposable
 {
     /// <summary>Issues: get, search, create, update, links, transitions and comments.</summary>

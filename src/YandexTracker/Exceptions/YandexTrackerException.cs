@@ -1,7 +1,8 @@
 namespace YandexTracker;
 
 /// <summary>
-/// The base class of every exception the library throws. Catch this type to handle any error coming from the client.
+/// The base class of SDK-specific API and response serialization failures.
+/// Argument validation, cancellation, timeouts and transport failures use standard .NET exceptions.
 /// </summary>
 public class YandexTrackerException : Exception
 {

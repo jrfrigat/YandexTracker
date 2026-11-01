@@ -1,7 +1,7 @@
 # YandexTracker
 
 Read C:/Users/frost/.claude/CLAUDE.md before work. This is an independent SDK for .NET 8/9/10.
-Read README.md, CONTRIBUTING.md and docs/articles/en/architecture.md for the project boundaries.
+Read README.md and docs/articles/en/getting-started.md for usage and supported boundaries.
 Public API needs English XML comments. Keep both documentation languages current.
 SDK protocol work belongs here; Alva import mapping belongs in the linked Alva project.
 Use Aiko as durable workflow: read project context/card/feed, start its stage before edits, produce

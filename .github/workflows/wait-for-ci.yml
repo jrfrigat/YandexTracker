@@ -1,0 +1,45 @@
+name: Wait for CI
+on:
+  workflow_call:
+    inputs:
+      branch:
+        description: Optional branch filter for the existing CI run
+        required: false
+        type: string
+        default: ''
+permissions:
+  contents: read
+  actions: read
+  checks: read
+jobs:
+  wait:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Require successful CI for this commit
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          COMMIT_SHA: ${{ github.sha }}
+          CI_BRANCH: ${{ inputs.branch }}
+        run: |
+          set -euo pipefail
+          branch_args=()
+          if [[ -n "$CI_BRANCH" ]]; then branch_args=(--branch "$CI_BRANCH"); fi
+          run_id=""
+          for attempt in {1..30}; do
+            run_id=$(gh run list --workflow ci.yml --commit "$COMMIT_SHA" "${branch_args[@]}" --event push --limit 1 --json databaseId --jq '.[0].databaseId // empty')
+            if [[ -n "$run_id" ]]; then break; fi
+            echo "Waiting for CI to appear for $COMMIT_SHA ($attempt/30)."
+            sleep 10
+          done
+          if [[ -z "$run_id" ]]; then
+            echo "::error::No branch-push CI run found for $COMMIT_SHA."
+            exit 1
+          fi
+          gh run watch "$run_id" --exit-status --interval 10
+          conclusion=$(gh run view "$run_id" --json conclusion --jq '.conclusion')
+          if [[ "$conclusion" != success ]]; then
+            echo "::error::CI $run_id concluded with $conclusion."
+            exit 1
+          fi

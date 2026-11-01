@@ -24,7 +24,6 @@ var options = new YandexTrackerClientOptions
 ~~~
 
 Tokens are supplied by the application; the SDK neither obtains nor refreshes them.
-Live tests currently accept OAuth only, with optional YANDEX_TRACKER_ORG_KIND=cloud.
-The .env loader belongs to the tests; applications must load their own configuration.
+The SDK does not load .env files; applications must load their own configuration.
 Use the default HTTPS BaseAddress. Authorization is attached to requests sent to that address;
 do not allow untrusted user input to select it. Do not log tokens or raw private issue data.

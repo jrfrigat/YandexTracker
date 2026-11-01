@@ -5,7 +5,7 @@ namespace YandexTracker.Models.Issues;
 
 /// <summary>
 /// A Tracker issue. Standard fields are typed; queue-local fields and anything the API adds later stay in
-/// <see cref="Fields"/>, like the attributes of an issue object in the official Python SDK.
+/// <see cref="Fields"/> as JSON values, preserving data outside the typed subset.
 /// </summary>
 public sealed record Issue
 {

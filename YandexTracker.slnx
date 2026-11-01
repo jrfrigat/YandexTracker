@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/samples/">
+    <Project Path="samples/YandexTracker.QuickStart/YandexTracker.QuickStart.csproj" />
+  </Folder>
   <Folder Name="/src/">
     <Project Path="src/YandexTracker/YandexTracker.csproj" />
   </Folder>

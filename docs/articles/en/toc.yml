@@ -6,9 +6,3 @@
   href: issues.md
 - name: Errors and retries
   href: errors.md
-- name: Architecture
-  href: architecture.md
-- name: FAQ
-  href: faq.md
-- name: Releasing
-  href: releasing.md

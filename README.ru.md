@@ -31,7 +31,7 @@
 
 ## Установка
 
-Первая планируемая версия - 0.1.0. До публикации пакета используйте [локальный источник](docs/articles/ru/releasing.md). Сайт и бейджи станут доступны после настройки GitHub и выпуска.
+Выберите доступную версию в [NuGet](https://www.nuget.org/packages/YandexTracker). В репозитории также есть [пример чтения данных](samples/YandexTracker.QuickStart/README.ru.md).
 
 ```bash
 dotnet add package YandexTracker
@@ -119,36 +119,8 @@ catch (YandexTrackerApiException e)
 - [Авторизация](docs/articles/ru/authentication.md)
 - [Задачи и поиск](docs/articles/ru/issues.md)
 - [Ошибки и повторы](docs/articles/ru/errors.md)
-- [Архитектура](docs/articles/ru/architecture.md)
-- [Вопросы и ответы](docs/articles/ru/faq.md)
-
-## Устройство репозитория
-
-```
-.
-+-- src/
-|   \-- YandexTracker/          # библиотека: клиент, разделы, модели, исключения, HTTP, JSON
-+-- tests/
-|   \-- YandexTracker.Tests/    # модульные тесты + интеграционные (только чтение, по токену) (xUnit)
-+-- docs/                       # сайт документации (DocFX)
-+-- assets/                     # иконка
-\-- .github/workflows/          # CI, выпуск в NuGet, CodeQL, публикация документации
-```
-
-## Сборка и тесты
-
-```bash
-dotnet restore
-dotnet build -c Release
-dotnet test  -c Release
-```
-
-Нужен .NET SDK 10 (он собирает цели net8.0/net9.0/net10.0). Интеграционные тесты читают настоящий API и
-**пропускаются автоматически**, пока не заданы `YANDEX_TRACKER_TOKEN` и `YANDEX_TRACKER_ORG_ID` (в окружении или в
-`.env`, см. [`.env.example`](.env.example)). Они ничего не меняют в организации.
+- [Запускаемый пример чтения](samples/YandexTracker.QuickStart/README.ru.md)
 
 ## Лицензия
 
 [MIT](LICENSE) (c) FrigaT
-
-Подробнее: [Выпуск](docs/articles/ru/releasing.md) | [Участие в разработке](CONTRIBUTING.ru.md).

@@ -31,7 +31,7 @@ Runs on **.NET 8, .NET 9 and .NET 10**.
 
 ## Installation
 
-The first planned release is 0.1.0. Before publication use the [local feed](docs/articles/en/releasing.md). The site and badges become available after GitHub setup and release.
+Choose an available version from [NuGet](https://www.nuget.org/packages/YandexTracker). A [read-only sample](samples/YandexTracker.QuickStart/README.md) is also available in the repository.
 
 ```bash
 dotnet add package YandexTracker
@@ -119,36 +119,8 @@ Guides and API reference: **<https://jrfrigat.github.io/YandexTracker/>**
 - [Authentication](docs/articles/en/authentication.md)
 - [Issues and search](docs/articles/en/issues.md)
 - [Errors and retries](docs/articles/en/errors.md)
-- [Architecture](docs/articles/en/architecture.md)
-- [FAQ](docs/articles/en/faq.md)
-
-## Repository layout
-
-```
-.
-+-- src/
-|   \-- YandexTracker/          # the library: client, endpoints, models, exceptions, HTTP, JSON
-+-- tests/
-|   \-- YandexTracker.Tests/    # unit tests + (token-gated, read-only) integration tests (xUnit)
-+-- docs/                       # documentation site (DocFX)
-+-- assets/                     # icon
-\-- .github/workflows/          # CI, release (NuGet), CodeQL, docs publishing
-```
-
-## Build and test
-
-```bash
-dotnet restore
-dotnet build -c Release
-dotnet test  -c Release
-```
-
-The .NET SDK 10 is required (it builds the net8.0/net9.0/net10.0 targets). Integration tests read from the real API
-and are **skipped automatically** unless `YANDEX_TRACKER_TOKEN` and `YANDEX_TRACKER_ORG_ID` are set (environment or
-`.env`, see [`.env.example`](.env.example)). They never change anything in the organization.
+- [Runnable read-only sample](samples/YandexTracker.QuickStart/README.md)
 
 ## License
 
 [MIT](LICENSE) (c) FrigaT
-
-See [Releasing](docs/articles/en/releasing.md) and [Contributing](CONTRIBUTING.md).

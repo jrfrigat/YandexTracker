@@ -3,50 +3,88 @@ on:
   push:
     tags: ['v*']
 permissions:
-  contents: write
-  id-token: write
+  contents: read
 concurrency:
   group: release-${{ github.ref }}
   cancel-in-progress: false
 jobs:
-  publish:
+  version:
     runs-on: ubuntu-latest
-    environment: nuget
+    steps:
+      - name: Validate version tag
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          [[ "$RELEASE_TAG" =~ ^v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)(-[0-9A-Za-z]+([.-][0-9A-Za-z]+)*)?$ ]]
+  ci:
+    name: Wait for CI
+    needs: version
+    permissions:
+      actions: read
+      checks: read
+      contents: read
+    uses: ./.github/workflows/wait-for-ci.yml
+  build:
+    needs: ci
+    runs-on: ubuntu-latest
+    container: mcr.microsoft.com/dotnet/sdk:10.0
     steps:
       - uses: actions/checkout@v7
         with:
           fetch-depth: 0
+          persist-credentials: false
+      - run: dotnet restore src/YandexTracker/YandexTracker.csproj
+      - run: dotnet build src/YandexTracker/YandexTracker.csproj -c Release --no-restore
+      - run: dotnet pack src/YandexTracker/YandexTracker.csproj -c Release --no-build -o artifacts
+      - uses: actions/upload-artifact@v7
+        with:
+          name: release-packages
+          path: |
+            artifacts/*.nupkg
+            artifacts/*.snupkg
+          if-no-files-found: error
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    environment: nuget
+    permissions:
+      contents: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          persist-credentials: false
       - uses: actions/setup-dotnet@v6
         with:
-          dotnet-version: |
-            8.0.x
-            9.0.x
-            10.0.x
-      - name: Validate version tag
-        shell: bash
-        env:
-          RELEASE_TAG: ${{ github.ref_name }}
-        run: |
-          [[ "$RELEASE_TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.-]+)?$ ]] || exit 1
-      - run: dotnet restore YandexTracker.slnx
-      - run: dotnet build YandexTracker.slnx -c Release --no-restore
-      - run: dotnet test YandexTracker.slnx -c Release --no-build
-      - run: dotnet pack src/YandexTracker/YandexTracker.csproj -c Release --no-build -o artifacts
+          global-json-file: global.json
+      - uses: actions/download-artifact@v7
+        with:
+          name: release-packages
+          path: artifacts
       - name: NuGet login (Trusted Publishing)
         id: login
         uses: NuGet/login@v1
         with:
           user: ${{ vars.NUGET_USER }}
-      - name: Publish packages and symbols
+      - name: Publish verified packages and symbols
         env:
           NUGET_API_KEY: ${{ steps.login.outputs.NUGET_API_KEY }}
-        run: dotnet nuget push "artifacts/*.nupkg" --api-key "$NUGET_API_KEY" --source https://api.nuget.org/v3/index.json --skip-duplicate
-      - name: Create GitHub release
-        shell: bash
+        run: dotnet nuget push 'artifacts/*.nupkg' --api-key "$NUGET_API_KEY" --source https://api.nuget.org/v3/index.json --skip-duplicate
+      - name: Publish complete GitHub release
         env:
           GH_TOKEN: ${{ github.token }}
           RELEASE_TAG: ${{ github.ref_name }}
         run: |
-          flags=()
-          if [[ "$RELEASE_TAG" == *-* ]]; then flags+=(--prerelease --latest=false); fi
-          gh release create "$RELEASE_TAG" artifacts/*.nupkg artifacts/*.snupkg --verify-tag --generate-notes --title "$RELEASE_TAG" "${flags[@]}"
+          set -euo pipefail
+          if gh release view "$RELEASE_TAG" --json isDraft > release-state.json; then
+            [[ "$(jq -r .isDraft release-state.json)" == true ]] || { echo 'Release is already public.'; exit 1; }
+          else
+            gh release create "$RELEASE_TAG" --verify-tag --generate-notes --title "$RELEASE_TAG" --draft
+          fi
+          gh release upload "$RELEASE_TAG" artifacts/*.nupkg artifacts/*.snupkg --clobber
+          if [[ "$RELEASE_TAG" == *-* ]]; then
+            gh release edit "$RELEASE_TAG" --draft=false --prerelease --latest=false
+          else
+            gh release edit "$RELEASE_TAG" --draft=false --latest
+          fi

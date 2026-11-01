@@ -43,7 +43,10 @@ public sealed class YandexTrackerClientOptions
     /// <summary>Whether <see cref="OrganizationId"/> is a Yandex 360 or a Yandex Cloud organization.</summary>
     public YandexTrackerOrganizationKind OrganizationKind { get; set; } = YandexTrackerOrganizationKind.Yandex360;
 
-    /// <summary>How many times a request is repeated after a 429 or a transient server error. Defaults to 3.</summary>
+    /// <summary>
+    /// Maximum retries after a 429 for any request, or after a 5xx or network error for reads and searches.
+    /// Defaults to 3; zero disables retries. Cancellation and authentication failures are not retried.
+    /// </summary>
     public int MaxRetries { get; set; } = 3;
 
     /// <summary>The first pause before a retry when the server names none; it doubles on every next attempt.</summary>

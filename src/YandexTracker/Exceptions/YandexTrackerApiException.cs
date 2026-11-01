@@ -5,7 +5,7 @@ namespace YandexTracker;
 /// <summary>
 /// Tracker refused a request. The message is Tracker's own <c>errorMessages</c>; the parsed body is in
 /// <see cref="Error"/> and the raw one in <see cref="RawResponse"/>. Common status codes get their own subclasses,
-/// as in the official Python SDK, so they can be caught without checking the code.
+/// so they can be caught without checking the code.
 /// </summary>
 public class YandexTrackerApiException : YandexTrackerException
 {

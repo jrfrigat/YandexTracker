@@ -6,9 +6,3 @@
   href: issues.md
 - name: Ошибки и повторы
   href: errors.md
-- name: Архитектура
-  href: architecture.md
-- name: Вопросы и ответы
-  href: faq.md
-- name: Выпуск
-  href: releasing.md

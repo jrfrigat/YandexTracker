@@ -2,7 +2,7 @@ root = true
 
 [*]
 charset = utf-8
-end_of_line = crlf
+end_of_line = lf
 insert_final_newline = true
 trim_trailing_whitespace = true
 indent_style = space
@@ -13,6 +13,9 @@ indent_size = 2
 
 [*.md]
 trim_trailing_whitespace = false
+
+[*.{bat,cmd}]
+end_of_line = crlf
 
 [*.cs]
 # --- Language conventions ---
@@ -57,7 +60,7 @@ dotnet_diagnostic.CA1869.severity = warning
 # ConfigureAwait: this is a library; we use ConfigureAwait(false) in the pipeline,
 # but do not want noise on every await in samples/models.
 dotnet_diagnostic.CA2007.severity = none
-# The public surface intentionally mirrors Yandex Music's own naming. The following
+# The public surface intentionally mirrors Yandex Tracker's wire naming. The following
 # "identifier suffix/keyword" rules produce noise for a thin API binding.
 dotnet_diagnostic.CA1711.severity = none
 dotnet_diagnostic.CA1710.severity = none
